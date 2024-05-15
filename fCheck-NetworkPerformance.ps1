@@ -18,12 +18,8 @@
 			Enter the Filesize in GB of the Testfile. Default is 1GB.
 			
 		.EXAMPLE
-			fCheck-NetworkPerformance
-			Measure Copy Time and Network Performance copying a 1 GB Test File to each Exchange Server.
-			
-		.EXAMPLE
-			fCheck-NetworkPerformance -TestFileSizeGB 5
-			Measure Copy Time and Network Performance copying a 5 GB Test File to each Exchange Server.
+			fCheck-NetworkPerformance -TargetServers LAB-SRV-01,LAB-SRV-02,LAB-SRV-03 -TestFileSizeGB 5
+			Measure Copy Time and Network Performance copying a 5 GB Test File to each SRV Server.
 			
 		.EXAMPLE
 			fCheck-NetworkPerformance -TargetServers LAB-MGT-03,LAB-MGT-04
