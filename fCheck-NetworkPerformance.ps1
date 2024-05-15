@@ -70,7 +70,7 @@
 		Write-Host "`nMeasure Network Performance. Please wait...`n" -f Cyan
 		$NetworkPerformanceOverview = @()
 		ForEach ($Server in $TargetServers) {  
-			Write-Host "Source Server: $($Env:COMPUTERNAME) | Target Server: $Server | File Size: $TestFileSizeGB GB | " -NoNewLine
+			Write-Host "Test Network Performance to $Server | File Size: $TestFileSizeGB GB | " -NoNewLine
 			$Target = "\\$Server\c`$\Temp\"
 			If (!(Test-Path $Target)) {   
 				Try {
@@ -105,7 +105,7 @@
 		Remove-Item $TestFile -ErrorAction SilentlyContinue
 		$Result = ($NetworkPerformanceOverview | Sort TargetServer | ft @{E="SourceServer";N="Source Server       ";Width=20},@{E="TargetServer";N="Target Server       ";Width=20},@{E="CopyTime";N="      Copy Time";Align='Right';Width=15},@{E="NetworkPerformance";N=" Network Performance";Align='Right';Width=20} | Out-String).Trim()
 		Write-Host		
-  		Write-Host "Result Overview" -f Cyan
+  		Write-Host "Network Performance Result Overview" -f Cyan
   		$Result
     		Write-Host
 		[String]$Date = ((Get-Date).Date).ToString("yyyy-MM-dd")
