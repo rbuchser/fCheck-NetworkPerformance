@@ -46,7 +46,7 @@
 					
 		If (!(Test-Path C:\Temp\)) {New-Item -Path C:\ -Name Temp -ItemType Directory}
 		
-		$TestFile = "C:\Temp\TestFile-$($TestFileSizeGB)GB-$Localhost.dummy"
+		$TestFile = "C:\Temp\TestFile-$($TestFileSizeGB)GB-$($Env:COMPUTERNAME).dummy"
 		
 		# Remove any existing TestFile
 		Remove-Item $TestFile -ErrorAction SilentlyContinue
@@ -92,7 +92,7 @@
 			}
 			Write-Host "Copy Time: $([Math]::Round($WriteTest.TotalSeconds,1)) sec`t| Measured Value: $([Math]::Round($WriteMBs,0)) MB/s"
 			$Obj = New-Object PsObject
-			$Obj | Add-Member -Membertype NoteProperty -Name SourceServer -Value $Localhost
+			$Obj | Add-Member -Membertype NoteProperty -Name SourceServer -Value $($Env:COMPUTERNAME)
 			$Obj | Add-Member -Membertype NoteProperty -Name TargetServer -Value $Server
 			$Obj | Add-Member -Membertype NoteProperty -Name CopyTime -Value "$([Math]::Round($WriteTest.TotalSeconds,1)) Seconds"
 			$Obj | Add-Member -Membertype NoteProperty -Name NetworkPerformance -Value "$([Math]::Round($WriteMBs,0)) MB/s"
@@ -104,10 +104,11 @@
 	End {
 		Remove-Item $TestFile -ErrorAction SilentlyContinue
 		$Result = ($NetworkPerformanceOverview | Sort TargetServer | ft @{E="SourceServer";N="Source Server       ";Width=20},@{E="TargetServer";N="Target Server       ";Width=20},@{E="CopyTime";N="      Copy Time";Align='Right';Width=15},@{E="NetworkPerformance";N=" Network Performance";Align='Right';Width=20} | Out-String).Trim()
-		Write-Host 
+		Write-Host		
+  		Write-Host "Result Overview" -f Cyan
   		$Result
     		Write-Host
 		[String]$Date = ((Get-Date).Date).ToString("yyyy-MM-dd")
-		$NetworkPerformanceOverview | Export-Csv -Path "$Logs\$Date - Network Performance Check.csv" -Delimiter ";" -Encoding UTF8 -NoTypeInformation
+		$NetworkPerformanceOverview | Export-Csv -Path "C:\Temp\$Date - Network Performance Check.csv" -Delimiter ";" -Encoding UTF8 -NoTypeInformation
 	}
 }
