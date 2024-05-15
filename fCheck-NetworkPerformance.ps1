@@ -104,7 +104,7 @@
 	End {
 		Remove-Item $TestFile -ErrorAction SilentlyContinue
 		$Result = ($NetworkPerformanceOverview | Sort TargetServer | ft @{E="SourceServer";N="Source Server       ";Width=20},@{E="TargetServer";N="Target Server       ";Width=20},@{E="CopyTime";N="      Copy Time";Align='Right';Width=15},@{E="NetworkPerformance";N=" Network Performance";Align='Right';Width=20} | Out-String).Trim()
-		fShow-Overview -Header "Current Network Performance Overview" -Overview $Result
+		Write-Host $Result
 		[String]$Date = ((Get-Date).Date).ToString("yyyy-MM-dd")
 		$NetworkPerformanceOverview | Export-Csv -Path "$Logs\$Date - Network Performance Check.csv" -Delimiter ";" -Encoding UTF8 -NoTypeInformation
 	}
