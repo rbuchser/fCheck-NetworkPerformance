@@ -70,7 +70,7 @@
 		Write-Host "`nMeasure Network Performance. Please wait...`n" -f Cyan
 		$NetworkPerformanceOverview = @()
 		ForEach ($Server in $TargetServers) {  
-			Write-Host "Source Server: $Localhost | Target Server: $Server | File Size: $TestFileSizeGB GB | " -NoNewLine
+			Write-Host "Source Server: $($Env:COMPUTERNAME) | Target Server: $Server | File Size: $TestFileSizeGB GB | " -NoNewLine
 			$Target = "\\$Server\c`$\Temp\"
 			If (!(Test-Path $Target)) {   
 				Try {
